@@ -44,11 +44,15 @@ class UpdateFragment : Fragment() {
 
         binding.updateBtn.setOnClickListener {
             updateTask()
-
         }
 
-        //Add menu
-        setHasOptionsMenu(true)
+        binding.updateDeleteButton.setOnClickListener{
+            deleteUser()
+        }
+
+        binding.backArrow.setOnClickListener {
+            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+        }
 
         return binding.root
 
@@ -75,16 +79,7 @@ class UpdateFragment : Fragment() {
         return !(TextUtils.isEmpty(title) || TextUtils.isEmpty(description))
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.delete_menu,menu)
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.menu_delete){
-            deleteUser()
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
     private fun deleteUser() {
         val builder = AlertDialog.Builder(requireContext())

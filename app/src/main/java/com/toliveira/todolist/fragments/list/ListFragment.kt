@@ -9,7 +9,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -38,29 +40,30 @@ class ListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
 
+
         mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
         mTaskViewModel.readAllData.observe(viewLifecycleOwner, Observer{task ->
             adapter.setData(task)
+            if(task.isEmpty()){
+                binding.floatingDeleteButton.visibility = View.GONE
+            }else{
+                binding.floatingDeleteButton.visibility = View.VISIBLE
+            }
         })
+
 
         binding.floatingActionButton.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
 
-        setHasOptionsMenu(true)
 
-        return binding.root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.delete_menu,menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_delete){
+        binding.floatingDeleteButton.setOnClickListener {
             deleteAllTasks()
         }
-        return super.onOptionsItemSelected(item)
+
+
+
+        return binding.root
     }
 
     private fun deleteAllTasks() {

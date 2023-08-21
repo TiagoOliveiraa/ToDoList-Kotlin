@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -50,7 +51,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         holder.itemView.findViewById<TextView>(R.id.textViewTaskTitle).text = currentItem.title.toString()
 
         if(currentItem.resolved){
-            holder.itemView.findViewById<ConstraintLayout>(R.id.rowLayout).setBackgroundResource(R.color.Green)
+            holder.itemView.findViewById<TextView>(R.id.textViewTaskTitle).paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
         }
 
         holder.itemView.findViewById<ConstraintLayout>(R.id.rowLayout).setOnClickListener {

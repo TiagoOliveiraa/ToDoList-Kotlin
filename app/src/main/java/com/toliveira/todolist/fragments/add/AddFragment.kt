@@ -32,6 +32,10 @@ class AddFragment : Fragment() {
             insertDataToDatabase()
         }
 
+        binding.backArrow.setOnClickListener {
+            findNavController().navigate(R.id.action_addFragment_to_listFragment)
+        }
+
         return binding.root
     }
 
